@@ -1,32 +1,64 @@
-# Custom Object Detection with YOLOv7
+# YOLOv7 Training and Detection Pipeline
 
-This repository demonstrates the process of training and deploying the YOLOv7 model for custom object detection tasks. Below is a comprehensive guide covering data preparation, model training, and object detection on new videos.
+This project demonstrates the process of training and utilizing the YOLOv7 model for object detection on a custom dataset. The steps include data preparation, environment setup, model customization, training, and detection on new videos.
 
 ## Data Preparation
 
-### Image Annotation
+### 1. Image Annotation
+- Images were categorized into two sets.
+- Annotated using labelImg software for six classes: `Portugal`, `Spain`, `Ball`, `Referee`, `Goalkeeper.s`, and `Goalkeeper.p`.
 
-1. **Dataset Split**: The dataset was divided into two groups.
-2. **Annotation**: Using `labelImg`, images were annotated with six categories: Portugal, Spain, Ball, Referee, Goalkeeper.s, and Goalkeeper.p.
+### 2. Dataset Splitting
+- Corrected any labeling errors.
+- Split the dataset into `train` and `validation` sets with an 80:20 ratio.
 
-### Data Splitting
+## Environment Setup
 
-- After verifying and correcting annotations, the dataset was split into training and validation sets in an 80:20 ratio.
+### 1. Google Drive Integration
+- Provided access to Google Drive to save and load necessary files.
 
-## Setting Up the Environment
+### 2. Directory Configuration
+- Navigated to `MyDrive`.
+- Created and accessed a new directory if it didn't already exist.
 
-### Google Drive Integration
+### 3. Cloning YOLOv7 Repository
+- Cloned the YOLOv7 repository from GitHub into the new directory.
+- Changed directory to the `YOLOv7` folder.
 
-- The initial setup includes granting access to Google Drive for file management.
+### 4. Pre-trained Weights Download
+- Downloaded pre-trained weights for YOLOv7x.
 
-### Directory Management
+## Customizing YOLOv7 for the Dataset
 
-1. Change the working directory to `MyDrive`.
-2. Create a new directory if it doesn't exist and navigate into it.
+### 1. Data Configuration
+- Loaded training data and duplicated the `coco.yaml` file.
+- Edited the file to include the custom number of classes and their names.
 
-### Cloning the YOLOv7 Repository
+### 2. Model Configuration
+- Edited the `yolov7x.yaml` file in the `cfg/training` directory to match the custom dataset.
+- Set parameters: `Epoch` to 32, `BatchSize` to 16, and `ImageSize` to 416x416.
 
-- Clone the YOLOv7 GitHub repository into the new directory:
-  ```sh
-  git clone https://github.com/WongKinYiu/yolov7.git
-  cd yolov7
+## Model Training
+
+### 1. Initial Training
+- Trained the model using the specified data and configurations.
+
+### 2. Saving Trained Weights
+- Saved the best weights from the `runs/training/weights` directory to the main `yolov7` folder.
+
+## Object Detection on New Videos
+
+### 1. Video Preparation
+- Processed a 4-minute video clip not used in training.
+- Uploaded this video to the main directory.
+
+### 2. Running Detection
+- Used the `detect.py` script with the best-trained weights and a confidence threshold of 0.25 to detect objects in the video.
+- Saved detected results in the `yolov7/runs/detect` directory.
+
+## Additional Notes
+
+- The best training weights and detection scripts are available.
+- Example images and labels are provided in the dataset structure, but more labeled images are needed for optimal results.
+- You can download the mp4 file separately by clicking on it and selecting download.
+- Setting the epoch to 100 and confidence level to 0.5 can improve precision and recall but will require more time and resources.
